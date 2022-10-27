@@ -22,12 +22,12 @@ class Police(Human):
 
 
 me = CseEngineer('Tamim','Male',65,70,"Software Engineer",True)
-print(me.love_to_code)
-print(me.position)
+# print(me.love_to_code)
+# print(me.gender)
 
 # we can set value by parameter name. so we don't have to maintain order
-eng = CseEngineer(position="Software Engineer", love_to_code = True, name="Rakib",gender='male',height=70,weight=52,)
-print(eng.name)
+eng = CseEngineer(position="Software Engineer", love_to_code = True, name=True,gender='male',height=70,weight=52,)
+print(eng.name) 
 
 police = Police('Rafiq','Male',65,70,'Bangladeshi',True)
 police.Nationality()
