@@ -22,7 +22,7 @@ class User:
       with open ('urban_riders/user.txt','a') as file:
         file.write(f"{email} {pwd_encrypt}\n")
       file.close()
-    print(f"{self.name} user created successfully")
+    # print(f"{self.name} user created successfully")
 
   @staticmethod
   def log_in(email,password):
@@ -45,6 +45,7 @@ class User:
 
 class Rider(User):
   def __init__(self,name, email, password,location,balance):
+    self.__ride_info = []
     self.location = location
     self.balance = balance
     super().__init__(name, email, password)
@@ -58,13 +59,15 @@ class Rider(User):
   def request_trip(self,destination):
     pass
 
-  def start_trip(self,fair, destination):
-    self.balance -= fair
+  def start_trip(self,fare,trip_info):
+    self.balance -= fare
+    self.__ride_info.append(trip_info)
 
 
 class Driver(User):
   def __init__(self,name, email, password,location,license):
     super().__init__(name, email, password)
+    self.__trip_history = []
     self.location = location
     self.license = license
     self.validDriver = license_authority.validate_license(email, license)
@@ -73,7 +76,8 @@ class Driver(User):
   def take_driving_test(self):
     result = license_authority.driving_test(self.email)
     if result == False:
-      print("sorry you have failed")
+      pass
+      # print("sorry you have failed")
     else:
       self.license = result
       self.validDriver = True
@@ -93,21 +97,27 @@ class Driver(User):
         uber.add_vehicle(vehicle_type,new_vehicle)
 
     else:
-      print("You are not a valid driver")
+      pass
+      # print("You are not a valid driver")
 
-  def start_trip(self,destination,fair):
-    self.earning += fair
+  def start_trip(self,destination,fare,trip_info):
+    self.earning += fare
     self.location = destination
+    self.__trip_history.append(trip_info)
+
+  def trip_history(self):
+    return self.__trip_history
 
 
-rider1 = Rider('Rakib','rakibur54@gmail.com','rider1',random.randint(0,30),5000)
+rider1 = Rider('Rakib','rakibur54@gmail.com','rider1',random.randint(0,30),2000)
 
 for i in range(1,100):
   driver1 = Driver(f'Driver{i}',f'driver{i}@gmail.com',f'driver{i}',random.randint(0,100),random.randint(1000,9999))
   driver1.take_driving_test()
-  driver1.register_vehicle('car', random.randint(10000, 99999), 50)
+  driver1.register_vehicle('car', random.randint(10000, 99999), 10)
 
 
-uber.find_a_vehicle(rider1, 'car', 90)
+uber.find_a_vehicle(rider1, 'car', random.randint(1,100))
+uber.find_a_vehicle(rider1, 'car', random.randint(1,100))
 
 
