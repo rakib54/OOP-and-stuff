@@ -1,5 +1,28 @@
 from abc import ABC, abstractmethod
 
+# class Vehicle(ABC):
+#   speed = {
+#     'car':30,
+#     'bike':50,
+#     'cng':15
+#   }
+
+#   def __init__(self, vehicle_type,license_plate,rate,driver):
+#     self.vehicle_type = vehicle_type
+#     self.rate = rate
+#     self.driver = driver
+#     self.status = 'available'
+#     self.license_plate = license_plate
+#     self.speed = self.speed[vehicle_type]
+
+#   @abstractmethod
+#   def start(self):
+#     pass
+  
+#   @abstractmethod
+#   def trip_finished(self):
+#     pass
+
 class Vehicle(ABC):
     speed = {
         'car': 30,

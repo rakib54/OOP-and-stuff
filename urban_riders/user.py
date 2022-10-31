@@ -67,7 +67,6 @@ class Driver(User):
 
   def take_driving_test(self):
     result = license_authority.driving_test(self.email)
-    print('result ',result)
     if result == False:
       print("sorry you have failed")
     else:
@@ -96,15 +95,21 @@ class Driver(User):
     self.location = destination
 
 
-rider1 = Rider('Rakib','rakibur54@gmail.com','rider1',random.randint(100,500),5000)
+rider1 = Rider('Rakib','rakibur54@gmail.com','rider1',random.randint(0,30),5000)
 
-driver1 = Driver('Driver1','driver1@gmail.com','driver1',random.randint(100,500),5000)
+driver1 = Driver('Driver1','driver1@gmail.com','driver1',random.randint(0,30),5000)
 driver1.take_driving_test()
 driver1.register_vehicle('car', 1200, 500)
 
 
-driver2 = Driver('Driver2','driver2@gmail.com','driver1',random.randint(100,500),5000)
-driver3 = Driver('Driver3','driver3@gmail.com','driver1',random.randint(100,500),5000)
-driver4 = Driver('Driver','driver4@gmail.com','driver1',random.randint(100,500),5000)
+driver2 = Driver('Driver2','driver2@gmail.com','driver1',random.randint(0,30),5000)
+driver2.take_driving_test()
+driver2.register_vehicle('car', 1200, 500)
+driver3 = Driver('Driver3','driver3@gmail.com','driver1',random.randint(0,30),5000)
+driver3.take_driving_test()
+driver3.register_vehicle('car', 1200, 500)
+
+
+uber.find_a_vehicle(rider1, 'car', 90)
 
 
