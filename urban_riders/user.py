@@ -63,6 +63,9 @@ class Rider(User):
     self.balance -= fare
     self.__ride_info.append(trip_info)
 
+  def get_trip_history(self):
+    return self.__ride_info
+
 
 class Driver(User):
   def __init__(self,name, email, password,location,license):
@@ -72,6 +75,7 @@ class Driver(User):
     self.license = license
     self.validDriver = license_authority.validate_license(email, license)
     self.earning = 0
+    self.vehicle = None
 
   def take_driving_test(self):
     result = license_authority.driving_test(self.email)
@@ -85,25 +89,26 @@ class Driver(User):
   def register_vehicle(self,vehicle_type,license_plate,rate):
     if self.validDriver is True:
       if vehicle_type == 'car':
-        new_vehicle = Car(vehicle_type, license_plate, rate,self)
-        uber.add_vehicle(vehicle_type,new_vehicle)
+        self.vehicle = Car(vehicle_type, license_plate, rate,self)
+        uber.add_vehicle(vehicle_type,self.vehicle)
 
       elif vehicle_type == 'bike':
-        new_vehicle = Bike(vehicle_type, license_plate, rate,self)
-        uber.add_vehicle(vehicle_type, new_vehicle)
+        self.vehicle = Bike(vehicle_type, license_plate, rate,self)
+        uber.add_vehicle(vehicle_type, self.vehicle)
 
       else:
-        new_vehicle = Cng(vehicle_type, license_plate, rate, self)
-        uber.add_vehicle(vehicle_type,new_vehicle)
+        self.vehicle = Cng(vehicle_type, license_plate, rate, self)
+        uber.add_vehicle(vehicle_type,self.vehicle)
 
     else:
       pass
       # print("You are not a valid driver")
 
-  def start_trip(self,destination,fare,trip_info):
+  def start_trip(self,start,destination,fare,trip_info):
     self.earning += fare
     self.location = destination
     self.__trip_history.append(trip_info)
+    self.vehicle.start_driving(start, destination)
 
   def trip_history(self):
     return self.__trip_history
@@ -120,4 +125,6 @@ for i in range(1,100):
 uber.find_a_vehicle(rider1, 'car', random.randint(1,100))
 uber.find_a_vehicle(rider1, 'car', random.randint(1,100))
 
+
+uber.get_total_income()
 

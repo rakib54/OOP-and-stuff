@@ -24,7 +24,8 @@ class RideManager:
 
 
   def get_total_income(self):
-    return self.__total_income
+    # print(self.__income)
+    return self.__income
 
   def trip_history(self):
     return self.__trip_history
@@ -47,7 +48,7 @@ class RideManager:
             car.status = 'unavailable'
             trip_info = f"Match for {rider.name} for fare {fare} with {car.driver.name} from {rider.location} to {destination}"
             rider.start_trip(fare,trip_info)
-            car.driver.start_trip(destination,fare * 0.8,trip_info)
+            car.driver.start_trip(rider.location,destination,fare * 0.8,trip_info)
             self.__income += fare * 0.2
             self.__available_car.remove(car)
             self.__trip_history.append(trip_info)
