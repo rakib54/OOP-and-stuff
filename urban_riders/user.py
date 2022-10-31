@@ -1,5 +1,8 @@
 import hashlib
+import random
 from brta import BRTA
+from vehicles import Car,Bike,Cng
+from ride_manager import uber
 
 license_authority = BRTA()
 
@@ -64,26 +67,44 @@ class Driver(User):
 
   def take_driving_test(self):
     result = license_authority.driving_test(self.email)
+    print('result ',result)
     if result == False:
       print("sorry you have failed")
-
     else:
       self.license = result
-      self.validDriver = result
+      self.validDriver = True
+
+  def register_vehicle(self,vehicle_type,license_plate,rate):
+    if self.validDriver is True:
+      if vehicle_type == 'car':
+        new_vehicle = Car(vehicle_type, license_plate, rate,self)
+        uber.add_vehicle(vehicle_type,new_vehicle)
+
+      elif vehicle_type == 'bike':
+        new_vehicle = Bike(vehicle_type, license_plate, rate,self)
+        uber.add_vehicle(vehicle_type, new_vehicle)
+
+      else:
+        new_vehicle = Cng(vehicle_type, license_plate, rate, self)
+        uber.add_vehicle(vehicle_type,new_vehicle)
+
+    else:
+      print("You are not a valid driver")
 
   def start_trip(self,destination,fair):
     self.earning += fair
     self.location = destination
 
 
+rider1 = Rider('Rakib','rakibur54@gmail.com','rider1',random.randint(100,500),5000)
+
+driver1 = Driver('Driver1','driver1@gmail.com','driver1',random.randint(100,500),5000)
+driver1.take_driving_test()
+driver1.register_vehicle('car', 1200, 500)
 
 
-me = User('rakib', "rakib54@gmail.com", 'hero')
-User.log_in("rakib54@gmail.com", 'hero')
-shakib = Driver('shakib', 'shakib@gmail.com', 'shakib', 'Brisbane', 1212)
-
-shakib.take_driving_test()
-result  = license_authority.validate_license(shakib.email, shakib.license)
-print(result)
+driver2 = Driver('Driver2','driver2@gmail.com','driver1',random.randint(100,500),5000)
+driver3 = Driver('Driver3','driver3@gmail.com','driver1',random.randint(100,500),5000)
+driver4 = Driver('Driver','driver4@gmail.com','driver1',random.randint(100,500),5000)
 
 
