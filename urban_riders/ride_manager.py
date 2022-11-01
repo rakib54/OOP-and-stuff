@@ -53,7 +53,7 @@ class RideManager:
 
         if vehicle.status == 'available':
           vehicle.status = 'unavailable'
-          trip_info = f"Match for {rider.name} for fare {fare} with {vehicle.driver.name} from {rider.location} to {destination}"
+          trip_info = f"Match {vehicle_type} for {rider.name} for fare {fare} with {vehicle.driver.name} from {rider.location} to {destination}"
           rider.start_trip(fare,trip_info)
           vehicle.driver.start_trip(rider.location,destination,fare * 0.8,trip_info)
           self.__income += fare * 0.2
