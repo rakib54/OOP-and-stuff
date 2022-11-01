@@ -58,7 +58,7 @@ class Car(Vehicle):
 
         for i in range(0,distance):
             time.sleep(0.5)
-            print(f"Driving {self.license_plate} current position {i} of {distance}")
+            print(f"Driving {self.license_plate} current position {i} of {distance}\n")
         self.trip_finished()
         
     def trip_finished(self):

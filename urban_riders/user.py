@@ -3,6 +3,7 @@ import random
 from brta import BRTA
 from vehicles import Car,Bike,Cng
 from ride_manager import uber
+import threading
 
 license_authority = BRTA()
 
@@ -107,23 +108,27 @@ class Driver(User):
   def start_trip(self,start,destination,fare,trip_info):
     self.earning += fare
     self.location = destination
+    # start thread
+    trip_thread = threading.Thread(target=self.vehicle.start_driving,args = (start,destination,))
+    trip_thread.start()
     self.__trip_history.append(trip_info)
-    self.vehicle.start_driving(start, destination)
+    # self.vehicle.start_driving(start, destination)
 
   def trip_history(self):
     return self.__trip_history
 
 
 rider1 = Rider('Rakib','rakibur54@gmail.com','rider1',random.randint(0,30),2000)
+rider2 = Rider('Tamim','rakibur54@gmail.com','rider2',random.randint(0,30),2000)
 
 for i in range(1,100):
-  driver1 = Driver(f'Driver{i}',f'driver{i}@gmail.com',f'driver{i}',random.randint(0,100),random.randint(1000,9999))
+  driver1 = Driver(f'Driver{i}',f'driver{i}@gmail.com',f'driver{i}\n',random.randint(0,100),random.randint(1000,9999))
   driver1.take_driving_test()
   driver1.register_vehicle('car', random.randint(10000, 99999), 10)
 
 
 uber.find_a_vehicle(rider1, 'car', random.randint(1,100))
-uber.find_a_vehicle(rider1, 'car', random.randint(1,100))
+uber.find_a_vehicle(rider2, 'car', random.randint(1,100))
 
 
 uber.get_total_income()
