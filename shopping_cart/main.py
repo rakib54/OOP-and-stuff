@@ -32,10 +32,21 @@ class ShoppingBasket:
     if isNameExist == False:
       password = input("Enter your password: ")
       self.new_user = User(name, password)
-      self.user_lst.append({"name":name, "password":password})
+      self.user_lst.append({"username":name, "password":password})
       print("Account created successfully")
 
-    def addItemToCart(self,username):
+
+  def addItemToDatabase(self): # admin create product
+      itemId = input("Enter your product id: ")
+      price = int(input("Enter your price: "))
+      description = input("Enter your description: ")
+      quantity = int(input("Enter your quantity: "))
+
+      self.newItem = Item(itemId, price, description, quantity)
+      self.itemDB.append(vars(self.newItem))
+
+
+  def addItemToCart(self,username):
       if username in self.user_ordered_data.keys():
         itemId = input("Enter Item Id: ")
         quantity = int(input("Enter item quantity: "))
@@ -52,7 +63,7 @@ class ShoppingBasket:
         else:
           self.user_ordered_data[username] = [{"itemID":itemId, "quantity":quantity}]
 
-    def updateProductCart(self,username):
+  def updateProductCart(self,username):
       username = input("Enter your name: ")
       itemId = input("Enter your ItemId: ")
       quantity = int(input("Enter your updated quantity: "))
@@ -65,25 +76,64 @@ class ShoppingBasket:
             print("out of stock")
             break
 
-    def deleteProductCart(self):
+  def deleteProductCart(self,username,itemId):
         flag = 0
         for i in self.itemDB:
-          if i['itemId'] == itemId and i['quantity'] <= quantity:
-            print("items available")
+          if i['itemId'] == itemId:
             flag = 1
             break
 
-        if flag:
+        if flag: # item available
           for i in self.user_ordered_data[username]:
             if(i['itemID'] == itemId):
               self.user_ordered_data[username].remove(i)
 
+  def showDatabase(self):
+      print(self.itemDB)
+      print(self.user_ordered_data)
+      print(self.user_lst)
+
+basket = ShoppingBasket()
+basket.addItemToDatabase()
+basket.showDatabase()
+
+while True:
+  print("1. Create an Account\n2. Login to your account\n3. Exit")
+  choice = int(input("Enter your choice: "))
+  basket = ShoppingBasket()
+  if choice == 3:
+    break
+  elif choice == 1:
+    basket.create_account()
+  elif choice == 2:
+    name = input("Enter Your Name: ")
+    password = input("Enter Your Password: ")
+    isUserExists = False
+    for user in basket.user_lst:
+      if user['username'] == name and user['password'] == password:
+        isUserExists = True
+        break
+    if isUserExists: # valid user
+      while True:
+        print("1. Add Item to your cart\n2. Update Your Cart\n3. Delete Your Cart\n4. Show Your Cart")
+        choice = int(input("Enter your choice: "))
+        if choice == 1:
+          basket.addItemToCart(name)
+        elif choice == 2:
+          basket.updateProductCart(name)
+        elif choice == 3:
+          basket.deleteProductCart(name)
+        elif choice == 4:
+          basket.showDatabase()
+        else:
+          break
+
+    else:
+      print("Who You are? ")
 
 
 
-b = ShoppingBasket()
-b.create_account()
-print(b.get_userList())
+    
 
 
 
