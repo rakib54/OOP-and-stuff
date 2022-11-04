@@ -5,8 +5,8 @@ class User:
     self.password = password
 
 class Item:
-  def __init__(self,ItemID,price,description,quantity):
-    self.ItemID = ItemID
+  def __init__(self,ItemId,price,description,quantity):
+    self.ItemId = ItemId
     self.price = price
     self.description = description
     self.quantity = quantity
@@ -38,8 +38,8 @@ class ShoppingBasket:
 
   def addItemToDatabase(self): # admin create product
       itemId = input("Enter your product id: ")
+      description = input("Enter your product name: ")
       price = int(input("Enter your price: "))
-      description = input("Enter your description: ")
       quantity = int(input("Enter your quantity: "))
 
       self.newItem = Item(itemId, price, description, quantity)
@@ -47,29 +47,27 @@ class ShoppingBasket:
 
 
   def addItemToCart(self,username):
-      if username in self.user_ordered_data.keys():
-        itemId = input("Enter Item Id: ")
-        quantity = int(input("Enter item quantity: "))
+      itemId = input("Enter Item Id: ")
+      quantity = int(input("Enter item quantity: "))
 
-        flag = 0
-        for i in self.itemDB:
-          if i['itemId'] == itemId and i['quantity'] >= quantity:
-            print("items available")
-            flag = 1
-            break
+      flag = 0
+      for i in self.itemDB:
+        if i['ItemId'] == itemId and i['quantity'] >= quantity:
+          print("items available")
+          flag = 1
+          break
 
-        if not flag:
-          print("items not available")
-        else:
-          self.user_ordered_data[username] = [{"itemID":itemId, "quantity":quantity}]
+      if not flag:
+        print("items not available")
+      else:
+        self.user_ordered_data[username] = [{"ItemId":itemId, "quantity":quantity}]
 
   def updateProductCart(self,username):
-      username = input("Enter your name: ")
       itemId = input("Enter your ItemId: ")
       quantity = int(input("Enter your updated quantity: "))
       
       for i in self.user_ordered_data[username]:
-        if i['itemID'] == itemId:
+        if i['ItemId'] == itemId:
           if quantity <= i['quantity']:
             i['quantity'] = quantity
           else:
@@ -79,13 +77,13 @@ class ShoppingBasket:
   def deleteProductCart(self,username,itemId):
         flag = 0
         for i in self.itemDB:
-          if i['itemId'] == itemId:
+          if i['ItemId'] == itemId:
             flag = 1
             break
 
         if flag: # item available
           for i in self.user_ordered_data[username]:
-            if(i['itemID'] == itemId):
+            if(i['ItemId'] == itemId):
               self.user_ordered_data[username].remove(i)
 
   def showDatabase(self):
@@ -122,7 +120,8 @@ while True:
         elif choice == 2:
           basket.updateProductCart(name)
         elif choice == 3:
-          basket.deleteProductCart(name)
+          itemId = input("Enter Item ID: ")
+          basket.deleteProductCart(name,itemId)
         elif choice == 4:
           basket.showDatabase()
         else:
