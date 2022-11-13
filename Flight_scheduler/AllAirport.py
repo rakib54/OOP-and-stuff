@@ -34,7 +34,11 @@ class AllAirport:
       try:
         for line in lines:
           country = line[3]
+          if country not in country_currency:
+            continue
           currency = country_currency[country]
+          if currency not in currency_rates:
+            continue
           rate = currency_rates[currency]
           airports[line[4]] = Airport(line[4],line[1],line[2],line[3],line[6],line[7],rate)
       except KeyError as k:
@@ -55,7 +59,7 @@ class AllAirport:
     a = (sin(diff_lat / 2) * sin(diff_lon / 2) + cos(radians(lat1)) * cos(radians(lat2)) *
          sin(diff_lon / 2) * sin(diff_lon / 2))
     
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    c = (2 * atan2(sqrt(a), sqrt(1 - a)))
     distance = radius * c
     return distance
   
