@@ -23,5 +23,12 @@ def add_data():
   data[key] = value
   return f"{key} added"
 
+
+@app.route('/delete_data', methods=['GET', 'DELETE'])
+def delete_data():
+  key, value = list(request.args.items())[0]
+  data.pop(value)
+  return f"{key} deleted"
+
 if __name__ == '__main__':
   app.run()
