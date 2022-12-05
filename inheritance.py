@@ -26,7 +26,7 @@ class Parent(Grandparent):
         # super().__init__()
         
     
-class Child(Parent,Grandparent):
+class Child(Parent):
     def __init__(self):
         self.string1 = "I am from a Child"
         Parent.__init__(self)
