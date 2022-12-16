@@ -45,16 +45,16 @@ Child()
 
 class Parent:
     def __init__(self) -> None:
-        print("Parent class")
+        print("This function is called from the parent class.")
 
 class Child(Parent):
     def __init__(self) -> None:
         super().__init__()
-        print("Child class")
+        print("This function is called from the Child class.")
 
 class GrandChild(Child):
     def __init__(self) -> None:
         super().__init__()
-        print("GrandChild class")
+        print("This function is called from the GrandChild class.")
 
 GrandChild()

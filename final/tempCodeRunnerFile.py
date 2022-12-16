@@ -1,4 +1,3 @@
-[{'a':5,'b':10},{'x':15,'y':20}]
-# for val in range(data):
-#     for key,val2 in val:
-#         print(f"Key:{key} Value:{data[key]}")
+lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+newlst = [val for val in lst if val % 3 == 0]
+print(newlst)

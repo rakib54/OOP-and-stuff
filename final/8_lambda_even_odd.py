@@ -1,2 +1,2 @@
-even_odd = lambda num: "Yes" if num%2==0 else "No"
-print(even_odd(5))
+even_odd = lambda number: "Yes" if number %2 ==0 else "No"
+print(even_odd(6))

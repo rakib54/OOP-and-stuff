@@ -25,8 +25,8 @@ data = {
     }]
 }
 
-for _, parentList in data.items():
-    for parentDict in parentList:
-        for _, childDict in parentDict.items():
-            for key, val in childDict.items():
+for _, lst in data.items():
+    for p_list in lst:
+        for _, c_list in p_list.items():
+            for key, val in c_list.items():
                 print(f'Key:{key} Value:{val}')

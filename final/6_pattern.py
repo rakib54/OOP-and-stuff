@@ -1,10 +1,11 @@
-number = int(input("Enter a number: "))
-nums = [val for val in range(1, number+1)]
-for i in range(1, number+1):
-    for j in nums:
+take_num = int(input("Enter your number: "))
+nums_lst = [num for num in range(1, take_num+1)]
+
+for i in range(1, take_num +1):
+    for j in nums_lst:
         print(j, end="")
-    if i != number:
-        temp = nums[i-1]
-        nums[i-1] = nums[i]
-        nums[i] = temp
+    if i != take_num:
+        temp = nums_lst[i-1]
+        nums_lst[i-1] = nums_lst[i]
+        nums_lst[i] = temp
     print()
